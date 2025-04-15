@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grandma's Kitchen</title>
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <script src="{%  static 'js/script.js' %}"></script>
+</head>
+<body>
+    <!-- Intro Video Overlay -->
+    <div id="video-overlay">
+        <video id="introVideo" autoplay muted>
+            <source src="{% static 'videos/ve1.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+     <!-- Navbar -->
+    <nav class="navbar">
+    <div class="logo">
+        <img src="{% static 'logo2.webp' %}" alt="Logo">
+        <a href="{% url 'app1:home1' %}"><span>Grandmas Kitchen</span></a> 
+    </div>
+    <button class="menu-toggle">☰</button>
+    <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <div class="dropdown1">
+            <a href="#" class="dropdown1-toggle1">Category ▾</a>
+            <div class="dropdown1-menu1">
+                <a href="{% url 'app1:pickles' %}">Pickles</a>
+                <a href="{% url 'app1:sweets' %}">Sweets</a>
+                <a href="{% url 'app1:snacks' %}">Snacks</a>
+            </div>
+        </div>
+        
+        {% if request.user.is_authenticated %}
+            <li class="cart-wrapper">
+                <a href="{% url 'app1:cart' %}" class="modern-cart">
+                    🛒
+                    <span class="modern-cart-label">Cart</span>
+                    <span class="modern-cart-count" id="cart-count">{{ request.session.cart|length }}</span>
+                </a>
+            </li>
+
+            <!-- Profile Dropdown -->
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="profileDropdown">
+                    {% if request.user.profile.profile_image %}
+                        <img src="{{ request.user.profile.profile_image.url }}" alt="User" class="profile-icon">
+                    {% else %}
+                        <img src="{% static 'images/user-icon.png' %}" alt="User" class="profile-icon">
+                    {% endif %}
+                    {{ request.user.username }}
+                </a>
+                <ul class="dropdown-menu" id="profileMenu">
+                    <li><a href="{% url 'app1:profile' %}" class="dropdown-item">Profile</a></li>
+                    <li><a href="{% url 'app1:order_history' %}" class="dropdown-item">Orders</a></li>
+                    <li><a href="{% url 'app1:wishlist' %}" class="dropdown-item">Wishlist</a></li>
+                    <li><a href="{% url 'app1:logout' %}" class="dropdown-item">Logout</a></li>
+                </ul>
+            </li>
+        {% else %}
+            <li><a href="{% url 'app1:login' %}">Login</a></li>
+            <li><a href="{% url 'app1:register' %}">Register</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>Welcome to Our Online Food Store</h1><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <p>Delicious Pickles, Sweets, and Snacks delivered to your door!</p>
+    </header>
+
+    <!-- Product Cards -->
+    <!-- <section class="product-section">
+        <div class="product-card">
+            <img src="{% static 'pickels_logo.webp' %}" alt="Pickles">
+            <h3>Pickles</h3>
+            <p>Homemade, fresh, and full of flavor!</p>
+            <a href="{% url 'app1:pickles' %}" class="btn">Shop Now</a>
+        </div>
+        <div class="product-card">
+            <img src="{% static 'sweets_logo.webp' %}" alt="Sweets">
+            <h3>Sweets</h3>
+            <p>Traditional sweets made with love.</p>
+            <a href="{% url 'app1:sweets' %}" class="btn">Shop Now</a>
+        </div>
+        <div class="product-card">
+            <img src="{% static 'snacks_logo.png' %}" alt="Snacks">
+            <h3>Snacks</h3>
+            <p>Crunchy, tasty, and perfect for any time.</p>
+            <a href="{% url 'app1:snacks' %}" class="btn">Shop Now</a>
+        </div>
+    </section> -->
+    <!-- 3 -->
+    <div class="container1" id="food-container">
+        <div class="content">
+            <h1><span class="highlight">Better Food</span> for More People</h1>
+            <p>For over a decade, we’ve enabled our customers to discover new tastes, delivered right to their doorstep.</p>
+            <a href="{% url 'app1:view_more' %}" class="cta-button">Explore Our Menu</a>
+        </div>
+    
+        <div class="food-wrapper">
+            <img src="{% static 'gilabjam.png' %}" alt="Gilabjam" class="food-image">
+            <img src="{% static 'jantikalu.png' %}" alt="Jantikalu" class="food-image">
+            <img src="{% static 'mango_pickle.png' %}" alt="Mango Pickle" class="food-image">
+        </div>
+    </div>
+    <!-- phone section -->
+    <section class="app-preview">
+        <div class="container">
+            <h1 class="title">What’s waiting for you <br><span class="highlight">on the app?</span></h1>
+            <p class="subtitle">
+                Our app is packed with features that enable you to experience <br>
+                food shopping like never before.
+            </p>
+    
+            <div class="features-wrapper">
+                <!-- Left side features -->
+                <div class="features-column left">
+                    <div class="feature-card animate-slide">
+                        <img src="{% static 'vegmode.avif' %}" alt="Spicy Pickles" />
+                        <p>vegmode</p>
+                    </div>
+                    <div class="feature-card animate-slide">
+                        <img src="{% static 'helthy.avif' %}" alt="Sweet Pickles" />
+                        <p>Healty food </p>
+                    </div>
+                    <div class="feature-card animate-slide">
+                        <img src="{% static 'giftcards.avif' %}" alt="Gift Hampers" />
+                        <p>Gift Hampers</p>
+                    </div>
+                </div>
+    
+                <!-- Phone in center -->
+                <div class="phone-container">
+                    <img src="{% static 'phone.png' %}" alt="App Preview" class="phone" />
+                </div>
+    
+                <!-- Right side features -->
+                <div class="features-column right">
+                    <div class="feature-card animate-slide">
+                        <img src="{% static 'offers.avif' %}" alt="Special Offers" />
+                        <p>Special Offers</p>
+                    </div>
+                    <div class="feature-card animate-slide">
+                        <img src="{% static 'homefood.avif' %}" alt="Homemade Delights" />
+                        <p>Homemade Delights</p>
+                    </div>
+                    <div class="feature-card animate-slide">
+                        <img src="{% static 'delivery.jpg' %}" alt="Quick Delivery" />
+                        <p>Quick Delivery</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="order-now-wrapper">
+                <a href="{% url 'app1:view_more' %}" class="order-btn">Order Now</a>
+                <!-- <button class="order-btn">Order Now</button> -->
+            </div>
+        </div>
+    </section>    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>We deliver the best homemade pickles, sweets, and snacks. Fresh and tasty, straight to your door!</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="{% url 'app1:about' %}">About Us</a></li>
+                    <li><a href="{% url 'app1:contactus' %}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: support@foodstore.com</p>
+                <p>Phone: +91 98765 43210</p>
+                <p>Location: Chennai, India</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111392.png" alt="Facebook"></a>
+                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111368.png" alt="Instagram"></a>
+                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111703.png" alt="Twitter"></a>
+                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111425.png" alt="YouTube"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Food Store | All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

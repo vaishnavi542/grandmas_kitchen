@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <a href="{{ back_url }}">← BACK</a>
+    <h2>Shopping Cart</h2>
+
+    {% if cart_items %}
+    <table class="cart-table">
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+            <th>Action</th>
+        </tr>
+        {% for item in cart_items %}
+        <tr>
+            <td class="cart-product-cell">
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="cart-product-img">
+                <span>{{ item.product.name }}</span>
+            </td>
+            <td>
+                <form action="{% url 'app1:update_cart' item.product.id %}" method="post" class="quantity-form">
+                    {% csrf_token %}
+                    <div class="qty-controls">
+                        <button type="submit" name="action" value="decrease" class="qty-btn">−</button>
+                        <input type="text" name="quantity" value="{{ item.quantity }}" readonly class="qty-input">
+                        <button type="submit" name="action" value="increase" class="qty-btn">+</button>
+                    </div>
+                </form>                               
+            </td>
+            <td>₹{{ item.product.price }}</td>
+            <td>₹{{ item.subtotal }}</td>
+            <td>
+                <a href="{% url 'app1:remove_from_cart' item.product.id %}" class="remove-btn">Remove</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3 class="cart-total">Total: ₹{{ total_price }}</h3>
+    <a href="{% url 'app1:checkout' %}" class="checkout-btn">Proceed to Checkout</a>
+
+    {% else %}
+    <p class="empty-cart-msg">Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}

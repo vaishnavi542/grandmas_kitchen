@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/search_results.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="search-results-container">
+    <!-- Hidden iframe for form submissions -->
+    <iframe name="hidden_iframe" style="display: none;"></iframe>
+
+    <h2 class="page-title">Search Results for "{{ query }}"</h2>
+
+    <div class="product-container">
+        {% if products %}
+            {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <p class="price">₹{{ product.price }}</p>
+
+                    {% if product.id in cart_product_ids %}
+                        <a href="{% url 'app1:cart' %}" class="btn go-to-cart">Go to Cart</a>
+                    {% else %}
+                        <form action="{% url 'app1:add_to_cart' product.id %}?source=search" method="post" class="add-to-cart-form" target="hidden_iframe">
+                            {% csrf_token %}
+                            <button type="submit" class="btn add-to-cart">Add to Cart</button>
+                        </form>
+                    {% endif %}
+
+                    <button class="wishlist-btn" data-product-id="{{ product.id }}">Add to Wishlist ❤️</button>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-results">No products found for your search.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Popups -->
+<div class="popup-container">
+    <div id="popup-message" class="popup-msg hidden">Item added to cart! 🛒</div>
+    <div id="wishlist-popup" class="popup-msg hidden">Added to wishlist! ❤️</div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/search_results.js' %}" defer></script>
+{% endblock %}

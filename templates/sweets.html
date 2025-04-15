@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sweets - Grandma's Kitchen{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/sweets.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="category-nav">
+    <a href="{% url 'app1:pickles' %}">🥒 <span>Pickles</span></a>
+    <a href="{% url 'app1:sweets' %}">🍬 <span>Sweets</span></a>
+    <a href="{% url 'app1:snacks' %}">🍿 <span>Snacks</span></a>
+</div>
+
+<h2>Delicious Sweets 🍬</h2>
+
+<div class="filter-options">
+    <a href="?filter=sugar">Sugar</a> |
+    <a href="?filter=nosugar">No Sugar</a> |
+    <a href="?filter=lowtohigh">Price: Low to High</a>
+</div>
+
+<div class="product-list">
+    {% if products %}
+        {% for product in products %}
+        <div class="product-card">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <p><strong>Price:</strong> ₹{{ product.price }}</p>
+
+            {% if product.id in cart_product_ids %}
+                <a href="{% url 'app1:cart' %}?source={{ source }}" class="go-cart">Go to Cart</a>
+            {% else %}
+                <form action="{% url 'app1:add_to_cart' product.id %}?source={{ source }}" method="post" class="add-to-cart-form" target="hidden-iframe">
+                    {% csrf_token %}
+                    <button type="submit" class="btn add-to-cart">Add to Cart</button>
+                </form>
+            {% endif %}
+
+            <button class="wishlist-btn" data-product-id="{{ product.id }}">Add to Wishlist ❤️</button>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No sweets available at the moment. 🍯</p>
+    {% endif %}
+</div>
+
+<iframe name="hidden-iframe" style="display:none;"></iframe>
+
+<!-- Popups -->
+<div id="popup-message" class="popup">Item added to cart! 🛒</div>
+<div id="wishlist-popup" class="wishlist-popup">Item added to wishlist! ❤️</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/sweets.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/view_page.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Hidden iframe for form submission -->
+<iframe name="hidden_iframe" style="display: none;"></iframe>
+<div class="popup-container"></div>
+
+<!-- Popups
+<div id="popup-message" class="popup">Item added to cart! 🛒</div>
+<div id="wishlist-popup" class="wishlist-popup">Item added to wishlist! ❤️</div> -->
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="hero-content">
+        <div class="hero-logo">
+            <img src="{% static 'logo2.webp' %}" alt="Grandmaa's Kitchen Logo">
+        </div>
+        <div class="hero-text">
+            <h1>Grandmaa’s Kitchen</h1>
+            <p>Home-made Pickles, Snacks & Sweets, crafted with love ❤️</p>
+        </div>
+    </div>
+</div>
+
+<!-- Pickles Section -->
+<div class="horizontal-preview-container" id="pickles-section">
+    <h2 class="section-title">Top Pickles</h2>
+    <div class="horizontal-grid">
+        {% for product in pickles %}
+            <div class="preview-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h3>{{ product.name }}</h3>
+                <p class="price">₹{{ product.price }}</p>
+
+                {% if product.id in cart_product_ids %}
+                    <a href="{% url 'app1:cart' %}?source=pickles" class="go-cart">Go to Cart</a>
+                {% else %}
+                    <form action="{% url 'app1:add_to_cart' product.id %}?source=preview" method="post" target="hidden_iframe" class="add-to-cart-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn add-to-cart">Add to Cart</button>
+                    </form>
+                {% endif %}
+                <button class="wishlist-btn" data-product-id="{{ product.id }}">Add to Wishlist ❤️</button>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="viewmore-wrapper">
+        <a href="{% url 'app1:pickles' %}"><button class="view-more-btn">View More</button></a>
+    </div>
+</div>
+
+<!-- Snacks Section -->
+<div class="horizontal-preview-container" id="snacks-section">
+    <h2 class="section-title">Top Snacks</h2>
+    <div class="horizontal-grid">
+        {% for product in snacks %}
+            <div class="preview-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h3>{{ product.name }}</h3>
+                <p class="price">₹{{ product.price }}</p>
+
+                {% if product.id in cart_product_ids %}
+                    <a href="{% url 'app1:cart' %}?source=snacks" class="go-cart">Go to Cart</a>
+                {% else %}
+                    <form action="{% url 'app1:add_to_cart' product.id %}?source=preview" method="post" target="hidden_iframe" class="add-to-cart-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn add-to-cart">Add to Cart</button>
+                    </form>
+                {% endif %}
+                <button class="wishlist-btn" data-product-id="{{ product.id }}">Add to Wishlist ❤️</button>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="viewmore-wrapper">
+        <a href="{% url 'app1:snacks' %}"><button class="view-more-btn">View More</button></a>
+    </div>
+</div>
+
+<!-- Sweets Section -->
+<div class="horizontal-preview-container" id="sweets-section">
+    <h2 class="section-title">Top Sweets</h2>
+    <div class="horizontal-grid">
+        {% for product in sweets %}
+            <div class="preview-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h3>{{ product.name }}</h3>
+                <p class="price">₹{{ product.price }}</p>
+
+                {% if product.id in cart_product_ids %}
+                    <a href="{% url 'app1:cart' %}?source=sweets" class="go-cart">Go to Cart</a>
+                {% else %}
+                    <form action="{% url 'app1:add_to_cart' product.id %}?source=preview" method="post" target="hidden_iframe" class="add-to-cart-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn add-to-cart">Add to Cart</button>
+                    </form>
+                {% endif %}
+                <button class="wishlist-btn" data-product-id="{{ product.id }}">Add to Wishlist ❤️</button>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="viewmore-wrapper">
+        <a href="{% url 'app1:sweets' %}"><button class="view-more-btn">View More</button></a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/preview.js' %}"></script>
+{% endblock %}

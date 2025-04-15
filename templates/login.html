@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <script defer src="{% static 'js/login.js' %}"></script>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+
+        <!-- Display Django messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="message {{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Display manual error -->
+        {% if error %}
+            <p class="message error">{{ error }}</p>
+        {% endif %}
+
+        <form method="post" id="login-form">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label for="id_username">Username</label>
+                {{ form.username }}
+            </div>
+
+            <div class="input-group">
+                <label for="id_password">Password</label>
+                {{ form.password }}
+            </div>
+            <p class="forgot-password">
+                <a href="{% url 'app1:forgot_password' %}">Forgot Password?</a>
+            </p>
+            <button type="submit" class="login-btn">Login</button>
+
+            <p class="register-link">
+                Don't have an account? 
+                <a href="{% url 'app1:register' %}">Register</a>
+            </p>
+        </form>
+    </div>
+
+</body>
+</html>

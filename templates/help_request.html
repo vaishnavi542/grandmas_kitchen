@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/help_request.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Help for Order #{{ order.id }}</h2>
+    <form method="post" class="form1">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div style="display: flex; justify-content: space-between;">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'app1:profile' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

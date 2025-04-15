@@ -1,0 +1,95 @@
+.container {
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 40px 30px;
+    background: #fdfdfd;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.container h2 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+.form1 {
+    display: flex;
+    flex-direction: column;
+}
+
+.form1 p {
+    margin-bottom: 20px;
+}
+
+.form1 label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #34495e;
+}
+
+.form1 input[type="text"],
+.form1 textarea,
+.form1 select {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 15px;
+    border: 1px solid #ccd1d9;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+.form1 input:focus,
+.form1 textarea:focus,
+.form1 select:focus {
+    border-color: #3498db;
+    outline: none;
+    background-color: #fff;
+}
+
+button.btn {
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+/* .btn-secondary {
+    background-color: #bdc3c7;
+    color: #2c3e50;
+    margin-left: 8px;
+} */
+
+.btn-secondary:hover {
+    background-color: #a6acaf;
+}
+.form1 a{
+    text-decoration: none;
+    background-color: #bdc3c7;
+    color: #2c3e50;
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
