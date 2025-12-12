@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🍲 Grandma's Kitchen - Django eCommerce Website
 
 ---
@@ -190,3 +191,6 @@ You can add custom test cases inside `app1/tests.py`
 > 💖 Thank you for visiting Grandma’s Kitchen — Where Every Byte Tastes Like Home!
 "# grandmas_kitchen" 
 "# grandmas_kitchen" 
+=======
+# grandmas_kitchen
+>>>>>>> a662bc641fa2399af12e2fe0176deb8515c0b164
